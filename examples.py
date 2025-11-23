@@ -6,7 +6,7 @@ Demonstrates additional features and customization options.
 
 import asyncio
 from datetime import datetime, timedelta
-from main import TelegramScraper
+from telegram_channel_message_scraper import TelegramChannelMessageScraper
 
 
 async def example_with_date_range():
@@ -14,9 +14,9 @@ async def example_with_date_range():
     print("Example: Fetch messages from last 30 days")
     print("-" * 50)
     
-    scraper = TelegramScraper()
+    scraper = TelegramChannelMessageScraper()
     await scraper.connect()
-    
+
     # Calculate date range
     end_date = datetime.now()
     start_date = end_date - timedelta(days=30)
@@ -45,11 +45,11 @@ async def example_filter_by_media():
     print("Example: Fetch only messages with photos")
     print("-" * 50)
     
-    scraper = TelegramScraper()
+    scraper = TelegramChannelMessageScraper()
     await scraper.connect()
-    
+
     channel = await scraper.client.get_entity("your_channel")
-    
+
     messages = []
     async for message in scraper.client.iter_messages(channel, limit=None, reverse=True):
         if not message.sender_id:
@@ -74,10 +74,10 @@ async def example_custom_csv_fields():
     print("-" * 50)
     
     import csv
-    
-    scraper = TelegramScraper()
+
+    scraper = TelegramChannelMessageScraper()
     await scraper.connect()
-    
+
     channel = await scraper.client.get_entity("your_channel")
     
     # Custom CSV with only essential fields
@@ -105,10 +105,10 @@ async def example_statistics():
     """Example: Generate channel statistics."""
     print("Example: Generate channel statistics")
     print("-" * 50)
-    
-    scraper = TelegramScraper()
+
+    scraper = TelegramChannelMessageScraper()
     await scraper.connect()
-    
+
     channel = await scraper.client.get_entity("your_channel")
     
     stats = {
@@ -147,12 +147,12 @@ async def example_download_media():
     """Example: Download media files from messages."""
     print("Example: Download media files")
     print("-" * 50)
-    
+
     from pathlib import Path
-    
-    scraper = TelegramScraper()
+
+    scraper = TelegramChannelMessageScraper()
     await scraper.connect()
-    
+
     channel = await scraper.client.get_entity("your_channel")
     
     # Create media directory

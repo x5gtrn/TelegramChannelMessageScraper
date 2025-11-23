@@ -1,11 +1,13 @@
 # Telegram Channel Message Scraper
 
-A Python tool to fetch all messages from a Telegram channel (admin posts only) and save them to CSV format using Telethon.
+A Python tool to fetch all messages from Telegram channels and save them to CSV format using Telethon.
 
 ## Features
 
 - ✅ Fetch all messages from a Telegram channel (oldest to newest)
-- ✅ Filter messages by admin users only
+- ✅ Interactive mode: Browse and select from your joined channels
+- ✅ Session-based login: Multiple user account support
+- ✅ Automatic self-post exclusion (excludes your own messages)
 - ✅ Export to CSV with comprehensive metadata
 - ✅ Resume capability (continue from interruption)
 - ✅ Progress tracking with visual progress bar
@@ -14,6 +16,7 @@ A Python tool to fetch all messages from a Telegram channel (admin posts only) a
 - ✅ Unicode support (handles Japanese, emoji, etc.)
 - ✅ Secure credential management
 - ✅ Comprehensive error handling
+- ✅ No admin permissions required
 
 ## Message Data Extracted
 
@@ -41,8 +44,8 @@ Each message includes:
 ### 1. Clone or download this repository
 
 ```bash
-git clone <repository-url>
-cd telegram_scraper
+git clone git@github.com:x5gtrn/TelegramChannelMessageScraper.git
+cd TelegramChannelMessageScraper
 ```
 
 ### 2. Create a virtual environment (recommended)
@@ -99,23 +102,74 @@ phone_number: "+1234567890"
 
 ## Usage
 
-### Basic Usage
+### Two Modes Available
 
+**Interactive Mode** (Recommended for browsing channels):
 ```bash
-python main.py <channel_username>
+python telegram_channel_message_scraper.py <username>
 ```
 
-### Examples
+**Direct Mode** (For specific channel):
+```bash
+python telegram_channel_message_scraper.py --channel <channel_username_or_id>
+```
+
+### Interactive Mode Examples
+
+```bash
+# Login as user 'x5gtrn' and browse joined channels
+python telegram_channel_message_scraper.py x5gtrn
+
+# Login as user 'myaccount'
+python telegram_channel_message_scraper.py myaccount
+```
+
+This mode will:
+1. Log you in with the specified username (creates a session file named after the username)
+2. Display all channels you've joined
+3. Let you select which channel to scrape interactively
+
+Example interactive session:
+```
+Successfully connected to Telegram as Daisuke (@x5gtrn)
+
+Fetching channel information...
+
+List of joined channels:
+--------------------------------------------------------------------------------
+1. Tech News Channel
+   @technews (ID: -1001234567890)
+
+2. Private Investment Group
+   Private (ID: -1009876543210)
+
+3. Crypto Updates
+   @cryptoupdates (ID: -1001111222333)
+
+Enter the target channel number (0 to cancel): 1
+
+Selected channel: Tech News Channel
+Fetching messages from: Tech News Channel
+Channel ID: -1001234567890
+Note: Typically, only admins can post in channels. Fetching all posts.
+(Your own posts will be excluded)
+...
+```
+
+### Direct Mode Examples
 
 ```bash
 # Using channel username (without @)
-python main.py durov
+python telegram_channel_message_scraper.py --channel durov
 
 # Using channel ID
-python main.py 1234567890
+python telegram_channel_message_scraper.py --channel 1234567890
+
+# Using negative channel ID (for supergroups)
+python telegram_channel_message_scraper.py --channel -1001234567890
 
 # With @ symbol (will be automatically removed)
-python main.py @durov
+python telegram_channel_message_scraper.py --channel @durov
 ```
 
 ### First Run
@@ -126,28 +180,31 @@ On first run, you will be prompted to:
 
 This authentication is saved in a session file, so you won't need to do it again.
 
+**Note**: In interactive mode, the session file is named after the username you provide (e.g., `x5gtrn.session`), allowing you to manage multiple accounts easily.
+
 ### Output
 
 The script will:
 1. Connect to Telegram
-2. Identify admin users in the channel
-3. Fetch all admin messages with a progress bar
-4. Save messages to `messages.csv` (or configured filename)
+2. (Interactive mode only) Display your joined channels for selection
+3. Fetch all messages from the selected/specified channel with a progress bar
+4. Automatically exclude your own posts
+5. Save messages to `messages.csv` (or configured filename)
 
-Example output:
+Example output (Direct Mode):
 ```
-Successfully connected to Telegram!
+Successfully connected to Telegram as Daisuke (@x5gtrn)
 Fetching messages from: Example Channel
-Channel ID: 1234567890
-Identifying admin users...
-Found admin: 123456
-Found admin: 789012
+Channel ID: -1001234567890
+Note: Typically, only admins can post in channels. Fetching all posts.
+(Your own posts will be excluded)
+Counting messages...
+Total messages to process: 5000
 
 Fetching messages (resuming from ID: 0)...
-Total messages to process: 5000
 Processing messages: 100%|████████████████| 5000/5000 [05:30<00:00, 15.15it/s]
 
-Total admin messages collected: 1234
+Total messages collected: 1234
 Successfully saved 1234 messages to messages.csv
 Progress file cleared.
 ```
@@ -171,10 +228,10 @@ Edit `config.yaml` to customize:
 
 ```yaml
 session_name: "telegram_session"      # Session file name
-output_file: "messages.csv"            # Output CSV filename
-timezone: "UTC"                        # Timezone for timestamps
-batch_size: 100                        # Messages per batch
-rate_limit_delay: 1                    # Delay in ms between requests
+output_file: "messages.csv"           # Output CSV filename
+timezone: "UTC"                       # Timezone for timestamps
+batch_size: 100                       # Messages per batch
+rate_limit_delay: 1                   # Delay in ms between requests
 ```
 
 ## CSV Output Format
@@ -217,12 +274,26 @@ rate_limit_delay: 1                    # Delay in ms between requests
 - Delete the `.session` file and run again
 - Ensure your phone number includes country code (e.g., +1234567890)
 
-### No admin messages found
-- Verify you have permission to view channel members
-- The channel might not have traditional "admins" (check channel type)
-- Try running without admin filtering (modify code as needed)
+### No messages found
+- The channel might be empty
+- Check that you have access to view the channel's messages
+- Verify the channel ID is correct (negative IDs for supergroups start with -100)
 
 ## Advanced Usage
+
+### Multiple User Accounts
+
+You can manage multiple Telegram accounts by using different usernames:
+
+```bash
+# Account 1
+python telegram_channel_message_scraper.py alice
+
+# Account 2
+python telegram_channel_message_scraper.py bob
+```
+
+Each username creates its own session file (e.g., `alice.session`, `bob.session`), allowing you to switch between accounts easily.
 
 ### Custom Output Filename
 
@@ -238,13 +309,21 @@ If you're getting rate limited frequently:
 rate_limit_delay: 5  # Increase delay to 5ms
 ```
 
+### Include Your Own Posts
+
+By default, your own posts are excluded. To include them, modify the `fetch_messages` call in `telegram_channel_message_scraper.py`:
+
+```python
+messages = await self.fetch_messages(channel_identifier, exclude_self_posts=False)
+```
+
 ### Process Specific Date Range
 
-Edit the `fetch_messages` method in `main.py` to add date filtering:
+Edit the `fetch_messages` method in `telegram_channel_message_scraper.py` to add date filtering:
 ```python
 async for message in self.client.iter_messages(
-    channel, 
-    limit=None, 
+    channel,
+    limit=None,
     reverse=True,
     offset_date=datetime(2024, 1, 1),  # Start from this date
 ):
@@ -278,8 +357,10 @@ async for message in self.client.iter_messages(
 
 - Telegram API rate limits apply (typically ~20 requests/second)
 - Large channels (100k+ messages) may take hours to process
-- Admin detection requires channel member permissions
+- You must be a member of the channel to scrape messages
 - Some private channels may not be accessible
+- The tool fetches all channel posts (typically only admins can post in channels)
+- Group chats (where all members can post) are not filtered by admin status
 
 ## License
 
@@ -299,7 +380,19 @@ For issues or questions:
 2. Review Telethon documentation: https://docs.telethon.dev/
 3. Open an issue on the repository
 
+## Resources
+
+- [Complete Guide to Telegram Channel Data Retrieval](https://daisuke.masuda.tokyo/article-2025-11-08-0057) - Detailed setup instructions and usage examples
+
 ## Changelog
+
+### Version 2.0.0
+- Added interactive mode for channel selection
+- Session-based login with username support
+- Automatic self-post exclusion
+- Removed admin permission requirements
+- Simplified message fetching (no admin checks)
+- Multi-account support via session files
 
 ### Version 1.0.0
 - Initial release

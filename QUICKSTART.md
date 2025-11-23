@@ -6,6 +6,7 @@ Get started with the Telegram Channel Scraper in 5 minutes!
 
 - Python 3.7+ installed
 - Telegram account
+- Member of at least one channel
 - 5 minutes of your time
 
 ## Step-by-Step Setup
@@ -54,13 +55,29 @@ TELEGRAM_PHONE=+1234567890
 
 ### 4. Run the Scraper (1 minute)
 
+**Interactive Mode** (Recommended - Browse your channels):
 ```bash
-python main.py <channel_username>
+python telegram_channel_message_scraper.py <your_username>
 ```
 
 Example:
 ```bash
-python main.py durov
+python telegram_channel_message_scraper.py alice
+```
+
+This will:
+1. Log you in
+2. Show all channels you've joined
+3. Let you select which one to scrape
+
+**Direct Mode** (If you know the channel):
+```bash
+python telegram_channel_message_scraper.py --channel <channel_username>
+```
+
+Example:
+```bash
+python telegram_channel_message_scraper.py --channel durov
 ```
 
 **First time only:** You'll be asked to enter a verification code from Telegram.
@@ -71,11 +88,16 @@ Open `messages.csv` in Excel, Google Sheets, or any spreadsheet application!
 
 ## Common Channels to Test
 
-Public channels you can try (no membership required):
+Public channels you can try (use direct mode):
 
 ```bash
-python main.py telegram       # Telegram News
-python main.py durov          # Pavel Durov's channel
+python telegram_channel_message_scraper.py --channel telegram       # Telegram News
+python telegram_channel_message_scraper.py --channel durov          # Pavel Durov's channel
+```
+
+Or use interactive mode to browse your own channels:
+```bash
+python telegram_channel_message_scraper.py myusername
 ```
 
 ## Troubleshooting Quick Fixes
@@ -86,11 +108,18 @@ python main.py durov          # Pavel Durov's channel
 ### "Channel is private"
 → Join the channel in Telegram first, then try again
 
-### "Username not found"
+### "Username not found" (Direct mode)
 → Check the channel username is correct (without @)
+→ Try interactive mode instead to browse your joined channels
 
 ### Script runs but finds no messages
-→ The channel might not have "admin" users, or you might not have permission to see members
+→ The channel might be empty
+→ Check that you're a member of the channel
+→ Verify the channel allows message viewing
+
+### "No joined channels were found" (Interactive mode)
+→ Make sure you've joined at least one channel in Telegram
+→ Try refreshing your Telegram app and waiting a minute
 
 ## Next Steps
 
@@ -102,13 +131,16 @@ python main.py durov          # Pavel Durov's channel
 
 ✅ **DO:**
 - Keep your `.env` file secure
+- Use interactive mode to discover channels you've joined
 - Start with small public channels to test
 - Use the resume feature for large channels
+- Use different usernames for multiple Telegram accounts
 
 ❌ **DON'T:**
 - Share your API credentials
-- Commit `.env` to git
+- Commit `.env` or `.session` files to git
 - Run multiple instances simultaneously
+- Try to scrape channels you're not a member of
 
 ## Support
 

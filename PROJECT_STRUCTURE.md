@@ -5,9 +5,9 @@ Overview of the Telegram Channel Scraper project files and directories.
 ```
 telegram_scraper/
 │
-├── main.py                 # Main scraper application
-├── examples.py             # Advanced usage examples
-├── check_config.py         # Configuration validation tool
+├── telegram_channel_message_scraper.py  # Main scraper application
+├── examples.py                          # Advanced usage examples
+├── check_config.py                      # Configuration validation tool
 │
 ├── config.yaml             # Configuration file (user-created)
 ├── .env                    # Environment variables (user-created, gitignored)
@@ -31,9 +31,9 @@ telegram_scraper/
 
 ## Core Files
 
-### main.py
+### telegram_channel_message_scraper.py
 The main application containing:
-- `TelegramScraper` class: Core scraping logic
+- `TelegramChannelMessageScraper` class: Core scraping logic
 - Connection and authentication handling
 - Message fetching with admin filtering
 - CSV export functionality
@@ -132,7 +132,7 @@ Key Python packages (see requirements.txt):
 ## File Flow
 
 ```
-User runs main.py
+User runs telegram_channel_message_scraper.py
     ↓
 Load .env and config.yaml
     ↓
@@ -167,7 +167,7 @@ Delete progress.json on success
 ## Adding New Features
 
 ### To add a new message field:
-1. Update `_extract_message_data()` in main.py
+1. Update `_extract_message_data()` in telegram_channel_message_scraper.py
 2. Add field to CSV fieldnames in `save_to_csv()`
 3. Update README.md documentation
 
