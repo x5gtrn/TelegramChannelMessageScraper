@@ -1,0 +1,15 @@
+# Telethon - Telegram client library
+telethon>=1.37.0
+
+# Configuration management
+python-dotenv>=1.0.0
+PyYAML>=6.0.1
+
+# Progress bar
+tqdm>=4.66.0
+
+# Async support (included in Python 3.7+, but explicit for clarity)
+# asyncio is built-in
+
+# Additional dependencies for better experience
+cryptg>=0.4.0  # Optional: speeds up encryption/decryption

@@ -1,0 +1,380 @@
+# ============================================
+# Telegram Channel Scraper - .gitignore
+# ============================================
+#
+# This file specifies intentionally untracked files
+# that Git should ignore. Files already tracked by
+# Git are not affected.
+#
+# ============================================
+
+# ============================================
+# SENSITIVE FILES - NEVER COMMIT THESE!
+# ============================================
+
+# Environment variables (contains API credentials)
+.env
+.env.local
+.env.*.local
+
+# Telegram session files (contain authentication tokens)
+*.session
+*.session-journal
+
+# Configuration files that may contain credentials
+config.yaml
+config.yml
+# Note: config.yaml.example is NOT ignored (it's safe to commit)
+
+# ============================================
+# PROJECT-SPECIFIC OUTPUT FILES
+# ============================================
+
+# Progress tracking
+progress.json
+*.progress
+
+# CSV output files
+*.csv
+messages.csv
+messages_*.csv
+output/*.csv
+
+# Downloaded media files
+downloaded_media/
+media/
+downloads/
+
+# JSON exports
+*.json
+!package.json
+!package-lock.json
+
+# ============================================
+# PYTHON
+# ============================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# ============================================
+# IDE AND EDITOR FILES
+# ============================================
+
+# Visual Studio Code
+.vscode/
+.vscode/*
+!.vscode/settings.json.example
+!.vscode/tasks.json.example
+!.vscode/launch.json.example
+!.vscode/extensions.json.example
+*.code-workspace
+
+# PyCharm / IntelliJ IDEA
+.idea/
+.idea/*
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.*.sw[a-z]
+*.un~
+Session.vim
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Eclipse
+.project
+.pydevproject
+.settings/
+
+# Kate
+.kateproject
+*.kateproject
+
+# ============================================
+# OPERATING SYSTEM FILES
+# ============================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.directory
+.Trash-*
+.nfs*
+
+# ============================================
+# ARCHIVE AND COMPRESSED FILES
+# ============================================
+
+# Archives (except project releases)
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+!telegram_scraper.tar.gz
+
+# ============================================
+# TEMPORARY AND CACHE FILES
+# ============================================
+
+# General temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+temp/
+tmp/
+cache/
+
+# Lock files
+*.lock
+!requirements.txt.lock
+
+# ============================================
+# LOGS AND DATABASES
+# ============================================
+
+# Log files
+*.log
+logs/
+*.log.*
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# ============================================
+# TESTING AND DEVELOPMENT
+# ============================================
+
+# Test output
+test_output/
+test_results/
+.test/
+
+# Debug files
+debug/
+*.debug
+
+# Profiling data
+*.prof
+
+# ============================================
+# DOCUMENTATION BUILD
+# ============================================
+
+# Generated documentation
+docs/_build/
+docs/.doctrees/
+site/
+
+# ============================================
+# SECURITY SCANNING
+# ============================================
+
+# Security scan results
+.scannerwork/
+.sonar/
+
+# ============================================
+# CUSTOM PROJECT EXCLUSIONS
+# ============================================
+
+# Exclude user-specific test channels
+test_channels.txt
+my_channels.txt
+
+# Exclude large output directories
+output/
+exports/
+backups/
+
+# ============================================
+# KEEP THESE FILES (Override previous rules)
+# ============================================
+
+# Keep example and template files
+!.env.example
+!config.yaml.example
+!.gitignore
+!README.md
+!QUICKSTART.md
+!LICENSE
+
+# ============================================
+# END OF .gitignore
+# ============================================
